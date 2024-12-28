@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JUSTIN.ad</title>
+    <style>
+        body {
+            background-color: #FFFDD0; /* Cream background */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+        }
+        .title {
+            font-size: 48px;
+            font-weight: bold;
+            color: darkred;
+        }
+        .weather {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+    </style>
+    <script>
+        async function fetchWeather() {
+            const apiKey = 'your_openweathermap_api_key'; // Replace with your OpenWeatherMap API key
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=Calgary,ca&units=imperial&appid=${apiKey}`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                document.getElementById('temperature').innerText = `${data.main.temp}°F`;
+            } catch (error) {
+                document.getElementById('temperature').innerText = 'Error fetching weather.';
+            }
+        }
+        window.onload = fetchWeather;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="title">JUSTIN.ad</div>
+        <div class="weather">
+            Current Temperature in Calgary, Alberta: <span id="temperature">Loading...</span>
+        </div>
+    </div>
+</body>
+</html>
