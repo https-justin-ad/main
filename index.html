@@ -39,6 +39,18 @@
             cursor: pointer;
         }
 
+        .start-menu {
+            display: none;
+            position: fixed;
+            bottom: 40px;
+            left: 0;
+            width: 200px;
+            background-color: #C0C0C0;
+            border: 2px outset #808080;
+            padding: 10px;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
         .desktop {
             display: flex;
             flex-wrap: wrap;
@@ -109,15 +121,15 @@
 <body>
     <div class="desktop">
         <div class="icon">
-            <img src="https://via.placeholder.com/48" alt="My Computer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Computer_icon.png" alt="My Computer">
             <p>My Computer</p>
         </div>
         <div class="icon">
-            <img src="https://via.placeholder.com/48" alt="Recycle Bin">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Recycle_Bin_icon.png" alt="Recycle Bin">
             <p>Recycle Bin</p>
         </div>
         <div class="icon">
-            <img src="https://via.placeholder.com/48" alt="Weather">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Weather_icon.png" alt="Weather">
             <p>Weather</p>
         </div>
     </div>
@@ -138,11 +150,31 @@
     </div>
 
     <div class="taskbar">
-        <button class="start-button">Start</button>
-        <span>12:00 PM</span>
+        <button class="start-button" onclick="toggleStartMenu()">Start</button>
+        <div id="clock"></div>
+    </div>
+
+    <div class="start-menu" id="startMenu">
+        <p>Programs</p>
+        <p>Documents</p>
+        <p>Settings</p>
+        <p>Find</p>
     </div>
 
     <script>
+        function toggleStartMenu() {
+            const startMenu = document.getElementById('startMenu');
+            startMenu.style.display = startMenu.style.display === 'none' || startMenu.style.display === '' ? 'block' : 'none';
+        }
+
+        function updateClock() {
+            const clock = document.getElementById('clock');
+            const now = new Date();
+            clock.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        setInterval(updateClock, 1000);
+
         async function getTemperature() {
             const zipCode = document.getElementById('zipCode').value;
             const apiKey = '55b7ffd03f374a2d87642322242812'; // Your WeatherAPI key
@@ -168,6 +200,9 @@
                 output.textContent = `Error: ${error.message}`;
             }
         }
+
+        // Initialize clock on page load
+        updateClock();
     </script>
 </body>
 </html>
