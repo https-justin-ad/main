@@ -3,67 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JUSTIN.ad</title>
+    <title>Windows 98 - Weather</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background: url('https://media.giphy.com/media/l41lUddDP2Pe19gco/giphy.gif') no-repeat center center fixed;
-            background-size: cover;
-            font-family: Arial, sans-serif;
-            color: white;
+            font-family: "MS Sans Serif", Arial, sans-serif;
+            background-color: #008080;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .taskbar {
+            width: 100%;
+            height: 40px;
+            background-color: #C0C0C0;
+            border-top: 2px solid #FFFFFF;
+            border-bottom: 2px solid #808080;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        .start-button {
+            background-color: #C0C0C0;
+            border: 2px outset #FFFFFF;
+            font-size: 16px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .desktop {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 50px;
+            justify-content: center;
+            gap: 20px;
+            padding-bottom: 50px;
+        }
+
+        .icon {
+            width: 100px;
             text-align: center;
+            font-size: 14px;
         }
 
-        h1 {
-            font-size: 4rem;
-            font-weight: bold;
-            margin-top: 20%;
-            text-shadow: 2px 2px 5px black;
+        .icon img {
+            width: 48px;
+            height: 48px;
         }
 
-        .weather-section {
-            margin-top: 2rem;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.5);
-            display: inline-block;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+        .window {
+            width: 300px;
+            background-color: #FFFFFF;
+            border: 2px outset #C0C0C0;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            margin: 20px auto;
+            padding: 10px;
         }
 
-        label, input, button, p {
-            font-size: 1.2rem;
+        .window-header {
+            background-color: #000080;
+            color: white;
+            font-size: 16px;
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .window-content {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .weather-tool {
+            background-color: #F0F0F0;
+            padding: 10px;
+            border: 2px inset #C0C0C0;
         }
 
         input {
-            padding: 0.5rem;
-            margin: 0.5rem 0;
-            border-radius: 5px;
-            border: none;
+            padding: 5px;
+            margin-right: 5px;
         }
 
         button {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 5px;
-            background-color: #007BFF;
-            color: white;
-            font-size: 1rem;
+            padding: 5px;
+            background-color: #C0C0C0;
+            border: 2px outset #FFFFFF;
             cursor: pointer;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #A0A0A0;
         }
     </style>
 </head>
 <body>
-    <h1>JUSTIN.ad</h1>
-    <div class="weather-section">
-        <label for="zipCode">Enter Zip Code: </label>
-        <input type="text" id="zipCode" placeholder="e.g., 90210">
-        <button onclick="getTemperature()">Get Temperature</button>
-        <p id="output"></p>
+    <div class="desktop">
+        <div class="icon">
+            <img src="https://via.placeholder.com/48" alt="My Computer">
+            <p>My Computer</p>
+        </div>
+        <div class="icon">
+            <img src="https://via.placeholder.com/48" alt="Recycle Bin">
+            <p>Recycle Bin</p>
+        </div>
+        <div class="icon">
+            <img src="https://via.placeholder.com/48" alt="Weather">
+            <p>Weather</p>
+        </div>
+    </div>
+
+    <div class="window">
+        <div class="window-header">
+            <span>Weather Tool</span>
+            <span>[X]</span>
+        </div>
+        <div class="window-content">
+            <div class="weather-tool">
+                <label for="zipCode">Enter Zip Code: </label>
+                <input type="text" id="zipCode" placeholder="e.g., 90210">
+                <button onclick="getTemperature()">Get Temperature</button>
+                <p id="output"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="taskbar">
+        <button class="start-button">Start</button>
+        <span>12:00 PM</span>
     </div>
 
     <script>
@@ -78,7 +154,7 @@
             }
 
             const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${zipCode}&aqi=no`;
-            
+
             try {
                 const response = await fetch(url);
                 if (!response.ok) {
