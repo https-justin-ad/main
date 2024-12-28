@@ -39,6 +39,18 @@
             cursor: pointer;
         }
 
+        .start-menu {
+            display: none;
+            position: fixed;
+            bottom: 40px;
+            left: 10px;
+            width: 150px;
+            background-color: #C0C0C0;
+            border: 2px outset #808080;
+            padding: 10px;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
         .desktop {
             display: flex;
             flex-wrap: wrap;
@@ -78,11 +90,6 @@
             align-items: center;
         }
 
-        .window-content {
-            margin: 10px 0;
-            font-size: 14px;
-        }
-
         .weather-tool {
             background-color: #F0F0F0;
             padding: 10px;
@@ -109,15 +116,15 @@
 <body>
     <div class="desktop">
         <div class="icon">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_My_Computer_Icon.png" alt="My Computer">
+            <img src="https://64.media.tumblr.com/0657a780adef65c4833f1f1bf7be6984/0ebe58e4ae82c162-d7/s540x810/fda5f625bb6a3b1c3f4f481612fd04586becca41.png" alt="My Computer">
             <p>My Computer</p>
         </div>
         <div class="icon">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Recycle_Bin_Icon_Windows_98.png" alt="Recycle Bin">
+            <img src="https://64.media.tumblr.com/4298712ab2ec48995a76c121a757c70d/63e7f767e7da00ab-62/s540x810/b2f10911ec263eea7a97a1a501a637d4d74d1094.png" alt="Recycle Bin">
             <p>Recycle Bin</p>
         </div>
         <div class="icon">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Weather_icon.png" alt="Weather">
+            <img src="https://i.pinimg.com/originals/d4/f4/94/d4f494c3a44a1fbcc210086758d37d56.png" alt="Weather">
             <p>Weather</p>
         </div>
     </div>
@@ -142,7 +149,7 @@
         <div id="clock"></div>
     </div>
 
-    <div class="start-menu" id="startMenu" style="display: none;">
+    <div class="start-menu" id="startMenu">
         <p>Programs</p>
         <p>Documents</p>
         <p>Settings</p>
@@ -161,11 +168,9 @@
             clock.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         }
 
-        setInterval(updateClock, 1000);
-
         async function getTemperature() {
             const zipCode = document.getElementById('zipCode').value;
-            const apiKey = '55b7ffd03f374a2d87642322242812'; // Your WeatherAPI key
+            const apiKey = '55b7ffd03f374a2d87642322242812'; // WeatherAPI Key
             const output = document.getElementById('output');
 
             if (!zipCode) {
@@ -189,8 +194,8 @@
             }
         }
 
-        // Initialize clock on page load
-        updateClock();
+        setInterval(updateClock, 1000); // Update the clock every second
+        updateClock(); // Initialize clock on page load
     </script>
 </body>
 </html>
