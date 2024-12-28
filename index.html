@@ -203,10 +203,12 @@
                     throw new Error('Unable to fetch location.');
                 }
                 const data = await response.json();
+                const ip = data.ip || 'Unknown IP';
                 const city = data.city || 'your city';
-                document.getElementById('location-greeting').textContent = `Welcome. How is ${city} today?`;
+                const country = data.country_name || 'your country';
+                document.getElementById('location-greeting').textContent = `Your IP address is: ${ip}. You are visiting from ${city}, ${country}.`;
             } catch (error) {
-                document.getElementById('location-greeting').textContent = 'Welcome. How is your city today?';
+                document.getElementById('location-greeting').textContent = 'Unable to retrieve your location details.';
             }
         }
 
