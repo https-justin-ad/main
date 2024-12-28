@@ -6,50 +6,92 @@
     <title>JUSTIN.ad</title>
     <style>
         body {
-            background-color: #FFFDD0; /* Cream background */
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-        .container {
+            background: url('https://media.giphy.com/media/l41lUddDP2Pe19gco/giphy.gif') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
             text-align: center;
         }
-        .title {
-            font-size: 48px;
+
+        h1 {
+            font-size: 4rem;
             font-weight: bold;
-            color: darkred;
+            margin-top: 20%;
+            text-shadow: 2px 2px 5px black;
         }
-        .weather {
-            margin-top: 20px;
-            font-size: 24px;
-            color: #333;
+
+        .weather-section {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            display: inline-block;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+        }
+
+        label, input, button, p {
+            font-size: 1.2rem;
+        }
+
+        input {
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
-    <script>
-        async function fetchWeather() {
-            const apiKey = 'your_openweathermap_api_key'; // Replace with your OpenWeatherMap API key
-            const url = `https://api.openweathermap.org/data/2.5/weather?q=Calgary,ca&units=imperial&appid=${apiKey}`;
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                document.getElementById('temperature').innerText = `${data.main.temp}°F`;
-            } catch (error) {
-                document.getElementById('temperature').innerText = 'Error fetching weather.';
-            }
-        }
-        window.onload = fetchWeather;
-    </script>
 </head>
 <body>
-    <div class="container">
-        <div class="title">JUSTIN.ad</div>
-        <div class="weather">
-            Current Temperature in Calgary, Alberta: <span id="temperature">Loading...</span>
-        </div>
+    <h1>JUSTIN.ad</h1>
+    <div class="weather-section">
+        <label for="zipCode">Enter Zip Code: </label>
+        <input type="text" id="zipCode" placeholder="e.g., 90210">
+        <button onclick="getTemperature()">Get Temperature</button>
+        <p id="output"></p>
     </div>
+
+    <script>
+        async function getTemperature() {
+            const zipCode = document.getElementById('zipCode').value;
+            const apiKey = '55b7ffd03f374a2d87642322242812'; // Your WeatherAPI key
+            const output = document.getElementById('output');
+
+            if (!zipCode) {
+                output.textContent = 'Please enter a valid zip code.';
+                return;
+            }
+
+            const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${zipCode}&aqi=no`;
+            
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Invalid zip code or unable to fetch data.');
+                }
+
+                const data = await response.json();
+                const temperature = data.current.temp_f;
+                output.textContent = `The current temperature in ${zipCode} is ${temperature}°F.`;
+            } catch (error) {
+                output.textContent = `Error: ${error.message}`;
+            }
+        }
+    </script>
 </body>
 </html>
