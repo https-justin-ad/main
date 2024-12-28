@@ -141,6 +141,8 @@
                 <button onclick="getTemperature()">Get Temperature</button>
                 <p id="output"></p>
             </div>
+            <hr>
+            <div id="location-greeting" style="margin-top: 10px; font-size: 16px; font-weight: bold;"></div>
         </div>
     </div>
 
@@ -194,8 +196,23 @@
             }
         }
 
+        async function fetchLocation() {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                if (!response.ok) {
+                    throw new Error('Unable to fetch location.');
+                }
+                const data = await response.json();
+                const city = data.city || 'your city';
+                document.getElementById('location-greeting').textContent = `Welcome. How is ${city} today?`;
+            } catch (error) {
+                document.getElementById('location-greeting').textContent = 'Welcome. How is your city today?';
+            }
+        }
+
         setInterval(updateClock, 1000); // Update the clock every second
         updateClock(); // Initialize clock on page load
+        fetchLocation(); // Fetch visitor's location on page load
     </script>
 </body>
 </html>
